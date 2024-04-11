@@ -1,4 +1,6 @@
+import { v4 as uuidv4 } from "uuid";
 import TaskModel from "../models/task.js";
+import TaskGroupModel from "../models/task_group.js";
 
 const GET_TASK_BY_ID_AAA = (req, res) => {
   return res.json({ status: "ok aaa" });
@@ -7,12 +9,16 @@ const GET_TASK_BY_ID_AAA = (req, res) => {
 const CREATE_TASK = async (req, res) => {
   try {
     const task = new TaskModel({
+      id: uuidv4(),
       title: req.body.title,
       status: req.body.status,
     });
-    task.id = task._id.toString();
 
     const response = await task.save();
+
+    await TaskGroupModel.findByIdAndUpdate(req.params.groupId, {
+      $push: { tasks_ids: task.id },
+    });
 
     return res
       .status(201)
