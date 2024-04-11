@@ -2,10 +2,6 @@ import { v4 as uuidv4 } from "uuid";
 import TaskModel from "../models/task.js";
 import TaskGroupModel from "../models/task_group.js";
 
-const GET_TASK_BY_ID_AAA = (req, res) => {
-  return res.json({ status: "ok aaa" });
-};
-
 const CREATE_TASK = async (req, res) => {
   try {
     const task = new TaskModel({
@@ -105,7 +101,6 @@ const DELETE_TASK_BY_ID = async (req, res) => {
 };
 
 export {
-  GET_TASK_BY_ID_AAA,
   CREATE_TASK,
   GET_ALL_TASKS,
   GET_PAGINATED_TASKS,

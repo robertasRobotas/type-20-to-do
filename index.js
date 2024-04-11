@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import taskRouter from "./src/routes/task.js";
 import taskGroupRouter from "./src/routes/task_group.js";
+import userRouter from "./src/routes/user.js";
 import "dotenv/config";
 
 const app = express();
@@ -18,6 +19,7 @@ mongoose
     console.log("err: ", err);
   });
 
+app.use(userRouter);
 app.use(taskGroupRouter);
 app.use(taskRouter);
 
