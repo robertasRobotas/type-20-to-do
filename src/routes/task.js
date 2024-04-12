@@ -7,13 +7,14 @@ import {
   UPDATE_TASK_BY_ID,
   DELETE_TASK_BY_ID,
 } from "../controllers/task.js";
+import auth from "../middlewares/auth.js";
 const router = express.Router();
 
-router.post("/tasks/:groupId", CREATE_TASK);
-router.get("/tasks", GET_ALL_TASKS);
+router.post("/tasks/:groupId", auth, CREATE_TASK);
+router.get("/tasks", auth, GET_ALL_TASKS);
 router.get("/tasks/pagination/:page", GET_PAGINATED_TASKS);
-router.get("/tasks/:id", GET_TASK_BY_ID);
-router.put("/tasks/:id", UPDATE_TASK_BY_ID);
-router.delete("/tasks/:id", DELETE_TASK_BY_ID);
+router.get("/tasks/:id", auth, GET_TASK_BY_ID);
+router.put("/tasks/:id", auth, UPDATE_TASK_BY_ID);
+router.delete("/tasks/:id", auth, DELETE_TASK_BY_ID);
 
 export default router;
