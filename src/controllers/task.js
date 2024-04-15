@@ -1,20 +1,19 @@
 import { v4 as uuidv4 } from "uuid";
 import TaskModel from "../models/task.js";
-import TaskGroupModel from "../models/task_group.js";
+// import TaskGroupModel from "../models/task_group.js";
 
 const CREATE_TASK = async (req, res) => {
   try {
     const task = new TaskModel({
       id: uuidv4(),
-      title: req.body.title,
-      status: req.body.status,
+      ...req.body,
     });
 
     const response = await task.save();
 
-    await TaskGroupModel.findByIdAndUpdate(req.params.groupId, {
-      $push: { tasks_ids: task.id },
-    });
+    // await TaskGroupModel.findByIdAndUpdate(req.params.groupId, {
+    //   $push: { tasks_ids: task.id },
+    // });
 
     return res
       .status(201)
@@ -27,7 +26,7 @@ const CREATE_TASK = async (req, res) => {
 
 const GET_ALL_TASKS = async (req, res) => {
   try {
-    const tasks = await TaskModel.find();
+    const tasks = await TaskModel.find({ userId: req.body.userId });
     return res.json({ tasks: tasks });
   } catch (err) {
     console.log("HANDLED ERROR: ", err);

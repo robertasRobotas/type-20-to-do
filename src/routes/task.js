@@ -8,9 +8,12 @@ import {
   DELETE_TASK_BY_ID,
 } from "../controllers/task.js";
 import auth from "../middlewares/auth.js";
+import validation from "../middlewares/validation.js";
+import taskValidationSchema from "../validationSchema/task.js";
+
 const router = express.Router();
 
-router.post("/tasks/:groupId", auth, CREATE_TASK);
+router.post("/tasks", validation(taskValidationSchema), auth, CREATE_TASK);
 router.get("/tasks", auth, GET_ALL_TASKS);
 router.get("/tasks/pagination/:page", GET_PAGINATED_TASKS);
 router.get("/tasks/:id", auth, GET_TASK_BY_ID);
